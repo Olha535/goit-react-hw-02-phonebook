@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Container from './Container';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-// import Contacts from './ContactList/Contacts';
-import Filter from './Filter';
-import contactJson from './contacts.json';
+import s from './App.module.css';
+import Container from '../Container';
+import ContactForm from '../ContactForm';
+import ContactList from '../ContactList';
+import Filter from '../Filter';
+import contactJson from '../contacts.json';
 
 class App extends Component {
   state = {
@@ -17,9 +17,10 @@ class App extends Component {
     const contactId = uuidv4();
     const newContact = { ...data, id: contactId };
     const { name } = data;
+    const { contacts } = this.state;
 
     if (
-      this.state.contacts.find(
+      contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase(),
       )
     ) {
@@ -55,20 +56,18 @@ class App extends Component {
       changeFilter,
       formSubmitHandler,
       visibleContact,
+      deleteContact,
       state: { filter },
     } = this;
     const filterContact = visibleContact();
 
     return (
       <Container>
-        <h1>Phonebook</h1>
+        <h1 className={s.title}>Phonebook</h1>
         <ContactForm onSubmit={formSubmitHandler} />
-        <h2>Contacts</h2>
+        <h2 className={s.title}>Contacts</h2>
         <Filter filter={filter} onChange={changeFilter} />
-        <ContactList
-          contacts={filterContact}
-          deleteContact={this.deleteContact}
-        />
+        <ContactList contacts={filterContact} deleteContact={deleteContact} />
       </Container>
     );
   }

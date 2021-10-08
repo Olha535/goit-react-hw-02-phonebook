@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import s from './ContactList.module.css';
 
 function ContactList({ contacts, deleteContact }) {
   return (
-    <div>
-      <ul>
-        {contacts.map(({ id, name, number }) => (
-          <li key={id}>
-            {name}: {number}
-            <button onClick={() => deleteContact(id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className={s.contactList}>
+      {contacts.map(({ id, name, number }) => (
+        <li key={id} className={s.contactItem}>
+          {name}: {number}
+          <button className={s.button} onClick={() => deleteContact(id)}>
+            Delete
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -24,6 +25,7 @@ ContactList.propTypes = {
       number: PropTypes.string,
     }),
   ),
+  deleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactList;
